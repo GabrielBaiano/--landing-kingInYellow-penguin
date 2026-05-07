@@ -1,6 +1,7 @@
 import { Canvas } from '@react-three/fiber'
 import { OrbitControls } from '@react-three/drei'
 import EtchedCrown from './EtchedCrown'
+import penguinLogo from './assets/Penguin_logo.svg'
 import './index.css'
 
 function App() {
@@ -31,7 +32,7 @@ function App() {
       <div className="ui-overlay">
         {/* Top-left logo */}
         <div className="ui-logo">
-          <div className="logo-icon">§</div>
+          <img src={penguinLogo} alt="Penguin Logo" className="logo-icon-svg" />
         </div>
 
         {/* Label */}

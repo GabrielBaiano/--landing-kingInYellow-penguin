@@ -56,16 +56,13 @@ body {
   position: absolute;
   top: 2rem;
   left: 2rem;
-  font-family: 'Inter', sans-serif;
-  font-weight: 700;
-  font-size: 2rem;
-  color: var(--text-color);
-  letter-spacing: -0.02em;
+  z-index: 20;
 }
 
-.ui-logo .logo-icon {
-  font-size: 2.8rem;
-  line-height: 1;
+.logo-icon-svg {
+  width: 3.5rem;
+  height: auto;
+  display: block;
 }
 
 /* Top-left label */
