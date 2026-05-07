@@ -9,7 +9,7 @@ function App() {
       {/* 3D Canvas */}
       <div className="canvas-container">
         <Canvas
-          camera={{ position: [1.5, 2.0, 5.0], fov: 38 }}
+          camera={{ position: [1.0, 1.2, 5.5], fov: 36 }}
           gl={{ antialias: true, alpha: true }}
           style={{ background: '#f2d80a' }}
         >
