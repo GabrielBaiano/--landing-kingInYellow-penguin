@@ -92,7 +92,9 @@ function App() {
 
       {/* Native Scroll Content */}
       <div className="scroll-content">
-        <div className="scroll-spacer" style={{ height: '100vh' }}></div>
+        <div className="scroll-spacer" style={{ height: '140vh' }}></div>
+        
+        {/* Title and Quote Section (Fixed height) */}
         <div className="editorial-section">
           <div className="editorial-title-wrapper">
             <h1 className="editorial-title">
@@ -108,6 +110,40 @@ function App() {
               of the King in Yellow.
             </p>
             <span className="quote-parenthesis">)</span>
+          </div>
+        </div>
+
+        {/* Detailed Text Section (Natural height) */}
+        <div className="editorial-details">
+          <p className="details-lead">
+            Step beyond the veil and enter the world of The King in Yellow — the legendary collection of strange tales that shaped modern cosmic horror.
+          </p>
+          
+          <p>
+            Originally written by Robert W. Chambers and first published in 1895, The King in Yellow became one of the most influential works in weird fiction history, inspiring generations of writers, artists, filmmakers, and occult horror alike. Long before modern psychological horror existed, Chambers created a universe haunted by madness, forbidden knowledge, and the shadow of the mysterious city of Carcosa.
+          </p>
+
+          <p>
+            At the center of the stories lies a forbidden play — a text so disturbing that those who read it slowly descend into obsession, paranoia, and insanity. Whispers of The Yellow Sign spread through every page, blurring the line between dream and reality.
+          </p>
+
+          <h2 className="details-sub">Now, in 2024, the nightmare returns.</h2>
+
+          <p>
+            As part of the official Penguin Weird Fiction Collection launch, The King in Yellow has been reintroduced in a newly curated edition celebrating the finest classics of weird literature. Released on October 17th, 2024, this edition was carefully curated and revised by editor Edward Kirke, bringing Chambers’ haunting vision to a new generation of readers.
+          </p>
+
+          <p>
+            Inspired by vintage Penguin paperbacks, fin-de-siècle illustration, and psychedelic horror aesthetics from the 60s and 70s, the new design transforms the book into both a collector’s artifact and a portal into one of horror’s most influential mythologies.
+          </p>
+
+          <p>
+            This release focuses on the core stories directly connected to The King in Yellow mythos — the tales that introduced Carcosa, The Yellow Sign, and the unseen King himself.
+          </p>
+
+          <div className="details-footer">
+            <p className="footer-line">The curtain rises once more.</p>
+            <p className="footer-question">Have you seen the Yellow Sign?</p>
           </div>
         </div>
         <div className="scroll-spacer" style={{ height: '100vh' }}></div>

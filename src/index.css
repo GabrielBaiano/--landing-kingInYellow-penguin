@@ -17,6 +17,8 @@ html, body {
   height: auto;
   overflow-x: hidden;
   overflow-y: auto;
+  background-color: var(--bg-color);
+  background-image: url("https://www.transparenttextures.com/patterns/natural-paper.png");
 }
 
 body {
@@ -186,16 +188,22 @@ body {
   position: relative;
   z-index: 5;
   pointer-events: none;
+  animation: contentFadeIn 1.5s ease-out both;
+}
+
+@keyframes contentFadeIn {
+  from { opacity: 0; transform: translateY(30px); }
+  to { opacity: 1; transform: translateY(0); }
 }
 
 .editorial-section {
-  height: 100vh;
+  min-height: 80vh;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
   text-align: center;
-  padding: 0 10%;
+  padding: 10vh 10% 0 10%;
   pointer-events: auto;
 }
 
@@ -269,19 +277,64 @@ body {
   text-align: center;
 }
 
-/* Animations */
-@keyframes fadeIn {
-  from { opacity: 0; transform: translateY(10px); }
-  to { opacity: 1; transform: translateY(0); }
+.editorial-details {
+  font-family: 'Spectral', serif;
+  max-width: 650px;
+  margin: 2rem auto 8rem auto; /* Reduced top margin */
+  text-align: left;
+  color: var(--text-color);
+  line-height: 1.7;
+  font-size: 1.15rem;
+}
+
+.editorial-details p {
+  margin-bottom: 1.5rem;
+  opacity: 0.85;
+}
+
+.details-lead {
+  font-size: 1.5rem;
+  font-weight: 500;
+  line-height: 1.4;
+  margin-bottom: 2rem !important;
+  opacity: 1 !important;
+  font-style: italic;
+}
+
+.details-sub {
+  font-family: 'Cinzel', serif;
+  font-size: 1.8rem;
+  margin: 4rem 0 2rem 0;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.details-footer {
+  margin-top: 6rem;
+  text-align: center;
+  border-top: 1px solid rgba(0,0,0,0.1);
+  padding-top: 4rem;
+}
+
+.footer-line {
+  font-size: 1.3rem;
+  margin-bottom: 0.5rem;
+  font-style: italic;
+}
+
+.footer-question {
+  font-family: 'Cinzel', serif;
+  font-size: 1.6rem;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  margin-top: 1rem;
 }
 
 .ui-overlay > * {
   animation: fadeIn 0.8s ease-out forwards;
 }
 
-.ui-settings {
-  animation-delay: 0.2s;
-}
+
 
 .ui-top-center {
   animation-delay: 0.4s;
