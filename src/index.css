@@ -210,7 +210,7 @@ body {
 .editorial-title-wrapper {
   text-align: left;
   display: inline-block;
-  margin-bottom: 2rem;
+  margin-bottom: 6rem;
 }
 
 .editorial-title {
@@ -250,7 +250,7 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
-  margin-top: 4rem;
+  margin-top: 0;
   width: 100%;
   gap: 2rem;
 }
@@ -280,7 +280,7 @@ body {
 .editorial-details {
   font-family: 'Spectral', serif;
   max-width: 650px;
-  margin: 2rem auto 8rem auto; /* Reduced top margin */
+  margin: 6rem auto 10rem auto;
   text-align: left;
   color: var(--text-color);
   line-height: 1.7;
@@ -310,7 +310,8 @@ body {
 }
 
 .details-footer {
-  margin-top: 6rem;
+  max-width: 650px;
+  margin: 4rem auto 0 auto; /* Reduced top margin */
   text-align: center;
   border-top: 1px solid rgba(0,0,0,0.1);
   padding-top: 4rem;
@@ -339,3 +340,189 @@ body {
 .ui-top-center {
   animation-delay: 0.4s;
 }
+
+/* Purchase Section */
+.purchase-section {
+  display: flex;
+  flex-direction: column; /* Stack vertically to fit the column */
+  max-width: 650px; /* Match the editorial text width */
+  margin: 10rem auto;
+  gap: 3rem;
+  align-items: center;
+  padding: 0 1.5rem;
+  pointer-events: auto;
+  text-align: center;
+}
+
+.book-preview {
+  width: 100%;
+  max-width: 350px; /* Don't let the book get too huge */
+  perspective: 1200px;
+}
+
+.book-img {
+  width: 100%;
+  height: auto;
+  display: block;
+  box-shadow: 20px 20px 60px rgba(0,0,0,0.25);
+  transition: all 0.6s cubic-bezier(0.23, 1, 0.32, 1);
+}
+
+.book-img:hover {
+  transform: translateY(-10px) scale(1.02);
+  box-shadow: 0 30px 80px rgba(0,0,0,0.35);
+}
+
+.purchase-info {
+  width: 100%;
+}
+
+.purchase-title {
+  font-family: 'Metamorphous', serif;
+  font-size: clamp(2rem, 5vw, 2.8rem);
+  margin-bottom: 0.5rem;
+  text-transform: lowercase;
+}
+
+.purchase-meta {
+  font-family: 'Cinzel', serif;
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  margin-bottom: 1.5rem;
+  opacity: 0.6;
+  text-transform: uppercase;
+}
+
+.purchase-desc {
+  font-family: 'Spectral', serif;
+  font-size: 1.15rem;
+  line-height: 1.6;
+  margin-bottom: 2rem;
+  opacity: 0.8;
+}
+
+.purchase-button {
+  display: inline-block;
+  padding: 1.2rem 3rem;
+  background-color: var(--text-color);
+  color: var(--bg-color);
+  text-decoration: none;
+  font-family: 'Cinzel', serif;
+  font-weight: 700;
+  font-size: 1rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1);
+  border: 1px solid var(--text-color);
+}
+
+.purchase-button:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 15px 35px rgba(0,0,0,0.25);
+  background-color: transparent;
+  color: var(--text-color);
+}
+
+/* Collection Section */
+.collection-section {
+  max-width: 650px;
+  margin: 15rem auto 4rem auto; /* Reduced bottom margin */
+  pointer-events: auto;
+  padding: 0 1.5rem;
+}
+
+.collection-header {
+  text-align: center;
+  margin-bottom: 4rem;
+}
+
+.collection-label {
+  font-family: 'Metamorphous', serif;
+  font-size: clamp(2rem, 5vw, 2.5rem);
+  margin-bottom: 0.8rem;
+  text-transform: lowercase;
+}
+
+.collection-sub {
+  font-family: 'Cinzel', serif;
+  font-size: 0.8rem;
+  letter-spacing: 0.2rem;
+  opacity: 0.5;
+  text-transform: uppercase;
+}
+
+.collection-img {
+  width: 100%;
+  height: auto;
+  display: block;
+  box-shadow: 0 20px 50px rgba(0,0,0,0.15);
+}
+
+.collection-footer {
+  margin-top: 4rem;
+  text-align: center;
+}
+
+.collection-button {
+  display: inline-block;
+  padding: 1.1rem 2.8rem;
+  background-color: transparent;
+  color: var(--text-color);
+  text-decoration: none;
+  font-family: 'Cinzel', serif;
+  font-weight: 700;
+  font-size: 0.95rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1);
+  border: 1px solid rgba(0,0,0,0.2);
+}
+
+.collection-button:hover {
+  background-color: var(--text-color);
+  color: var(--bg-color);
+  border-color: var(--text-color);
+  transform: translateY(-5px);
+  box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+}
+
+/* Site Footer */
+.site-footer {
+  max-width: 650px;
+  margin: 12rem auto 0 auto; /* Reduced by 20% from 15rem */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+  padding: 4rem 0 2rem 0; /* Reduced bottom padding */
+  border-top: none;
+  font-family: 'Cinzel', serif;
+  font-size: 0.7rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.footer-made-by {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem; /* More space for the rotated logo */
+}
+
+.footer-brand-logo {
+  height: 55px; /* Larger to force higher res rendering */
+  width: auto;
+  filter: grayscale(1) brightness(0);
+  opacity: 1;
+  transform: rotate(90deg) translateZ(0); /* translateZ(0) forces GPU rendering */
+  transform-origin: center;
+  backface-visibility: hidden; /* Helps with anti-aliasing */
+  -webkit-font-smoothing: antialiased;
+  image-rendering: -webkit-optimize-contrast; /* Sharpen vectors in some browsers */
+  display: block;
+}
+
+
+

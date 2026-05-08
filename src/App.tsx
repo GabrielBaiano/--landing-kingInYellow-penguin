@@ -3,6 +3,9 @@ import { Canvas, useFrame } from '@react-three/fiber'
 import { OrbitControls } from '@react-three/drei'
 import EtchedCrown from './EtchedCrown'
 import penguinLogo from './assets/Penguin_logo.svg'
+import bookCover from './assets/book_cover.jpg'
+import collectionImage from './assets/collection.jpg'
+import tomaTeLogo from './assets/logo-vertical.svg'
 import './index.css'
 
 function App() {
@@ -58,7 +61,7 @@ function App() {
             <div className="ui-label-brand">
               Penguin<br />
               Random House<br />
-              Grupo Editorial
+              Editorial Group
             </div>
           </div>
           
@@ -140,18 +143,65 @@ function App() {
           <p>
             This release focuses on the core stories directly connected to The King in Yellow mythos — the tales that introduced Carcosa, The Yellow Sign, and the unseen King himself.
           </p>
-
-          <div className="details-footer">
-            <p className="footer-line">The curtain rises once more.</p>
-            <p className="footer-question">Have you seen the Yellow Sign?</p>
-          </div>
         </div>
-        <div className="scroll-spacer" style={{ height: '100vh' }}></div>
+
+        {/* Purchase Section */}
+        <section className="purchase-section">
+          <div className="book-preview">
+            <img src={bookCover} alt="The King in Yellow Book Cover" className="book-img" />
+          </div>
+          <div className="purchase-info">
+            <h2 className="purchase-title">The King in Yellow</h2>
+            <p className="purchase-meta">Robert W. Chambers | Penguin Weird Fiction</p>
+            <p className="purchase-desc">
+              Experience the definitive edition of the cosmic horror classic. Newly curated and featuring a stunning collectible design.
+            </p>
+            <a 
+              href="https://www.penguin.co.uk/books/467853/the-king-in-yellow-by-chambers-robert-w/9781405972963" 
+              className="purchase-button"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              Purchase Now
+            </a>
+          </div>
+        </section>
+
+        {/* Collection Showcase */}
+        <section className="collection-section">
+          <div className="collection-header">
+            <h3 className="collection-label">Explore the collection</h3>
+            <p className="collection-sub">The Penguin Weird Fiction Collection</p>
+          </div>
+          <img src={collectionImage} alt="Penguin Weird Fiction Collection" className="collection-img" />
+          
+          <div className="collection-footer">
+            <a href="https://www.penguin.co.uk/" target="_blank" rel="noopener noreferrer" className="collection-button">
+              Visit penguin.co.uk
+            </a>
+          </div>
+        </section>
+
+        {/* Final Footer Question */}
+        <div className="details-footer">
+          <p className="footer-line">The curtain rises once more.</p>
+          <p className="footer-question">Have you seen the Yellow Sign?</p>
+        </div>
+
+        {/* Site Footer */}
+        <footer className="site-footer">
+          <div className="footer-copyright">
+            @2024 All rights reserved
+          </div>
+          <div className="footer-made-by">
+            <span>Made by</span>
+            <img src={tomaTeLogo} alt="Toma-te Logo" className="footer-brand-logo" />
+          </div>
+        </footer>
       </div>
     </div>
   )
 }
 
-
-
 export default App
+
