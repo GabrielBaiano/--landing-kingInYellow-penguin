@@ -1,5 +1,5 @@
-import { useRef, useEffect, useState } from 'react'
-import { Canvas, useFrame } from '@react-three/fiber'
+import { useEffect, useState } from 'react'
+import { Canvas } from '@react-three/fiber'
 import { OrbitControls } from '@react-three/drei'
 import EtchedCrown from './EtchedCrown'
 import penguinLogo from './assets/Penguin_logo.svg'

@@ -466,25 +466,24 @@ body {
 
 .collection-button {
   display: inline-block;
-  padding: 1.1rem 2.8rem;
-  background-color: transparent;
-  color: var(--text-color);
+  padding: 1.2rem 3rem;
+  background-color: var(--text-color);
+  color: var(--bg-color);
   text-decoration: none;
   font-family: 'Cinzel', serif;
   font-weight: 700;
-  font-size: 0.95rem;
-  letter-spacing: 0.15em;
+  font-size: 1rem;
+  letter-spacing: 0.12em;
   text-transform: uppercase;
   transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1);
-  border: 1px solid rgba(0,0,0,0.2);
+  border: 1px solid var(--text-color);
 }
 
 .collection-button:hover {
-  background-color: var(--text-color);
-  color: var(--bg-color);
-  border-color: var(--text-color);
-  transform: translateY(-5px);
-  box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+  transform: translateY(-8px);
+  box-shadow: 0 15px 35px rgba(0,0,0,0.25);
+  background-color: transparent;
+  color: var(--text-color);
 }
 
 /* Site Footer */
