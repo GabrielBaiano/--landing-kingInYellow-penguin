@@ -49,21 +49,21 @@ const fragShader = `
 
   void main() {
     // Basic lighting calculation
-    vec3 keyLight = normalize(vec3(0.5, 1.0, 0.8));
-    vec3 fillLight = normalize(vec3(-0.5, 0.0, -0.5));
+    vec3 keyLight = normalize(vec3(1.5, 1.0, 1.0));
+    vec3 fillLight = normalize(vec3(-1.0, -0.5, -0.5));
     
     float dotNL = dot(vNormal, keyLight);
     float key = max(dotNL, 0.0);
-    float fill = max(dot(vNormal, fillLight), 0.0) * 0.2;
+    float fill = max(dot(vNormal, fillLight), 0.0) * 0.1;
     
     // Smooth the lighting value a bit before dithering
-    float lit = clamp(0.05 + key * 0.9 + fill, 0.0, 1.0);
+    float lit = clamp(0.02 + key * 1.0 + fill, 0.0, 1.0);
 
     // Screen-space coordinates for dithering
     vec2 screenCoord = (vScreenPos.xy / vScreenPos.w * 0.5 + 0.5) * uResolution;
     
     // Pixelation factor: Divide screenCoord to make dither dots larger
-    float pixelSize = 1.5; 
+    float pixelSize = 3.0; 
     float limit = bayer4x4(screenCoord / pixelSize);
     
     // Obra Dinn "Hard" 1-bit thresholding

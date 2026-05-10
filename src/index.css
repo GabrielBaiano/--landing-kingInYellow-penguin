@@ -18,7 +18,7 @@ html, body {
   overflow-x: hidden;
   overflow-y: auto;
   background-color: var(--bg-color);
-  background-image: url("https://www.transparenttextures.com/patterns/natural-paper.png");
+  /* background-image: url("https://www.transparenttextures.com/patterns/natural-paper.png"); */
 }
 
 body {
@@ -149,6 +149,12 @@ body {
   color: var(--text-color);
   opacity: 1;
   transition: opacity 0.4s ease;
+}
+
+@media (max-width: 768px) {
+  .ui-top-center {
+    display: none;
+  }
 }
 
 /* Bottom-left indicator */
@@ -590,6 +596,7 @@ body {
   image-rendering: -webkit-optimize-contrast; /* Sharpen vectors in some browsers */
   display: block;
 }
+
 
 
 
