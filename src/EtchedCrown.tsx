@@ -1,64 +1,84 @@
 import { useRef, useMemo } from 'react'
-import { useFrame } from '@react-three/fiber'
+import { useFrame, useThree } from '@react-three/fiber'
 import * as THREE from 'three'
 
 const vertShader = `
   varying vec3 vNormal;
-  varying vec3 vWorldPos;
+  varying vec2 vUv;
+  varying vec4 vScreenPos;
   void main() {
     vNormal = normalize(normalMatrix * normal);
-    vWorldPos = (modelMatrix * vec4(position, 1.0)).xyz;
+    vUv = uv;
     gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0);
+    vScreenPos = gl_Position;
   }
 `
 
 const fragShader = `
   uniform vec3 uBase;
   uniform vec3 uLine;
+  uniform vec2 uResolution;
   varying vec3 vNormal;
-  varying vec3 vWorldPos;
+  varying vec4 vScreenPos;
+
+  // 4x4 Bayer Matrix for Ordered Dithering
+  float bayer4x4(vec2 p) {
+    vec2 pos = floor(mod(p, 4.0));
+    int x = int(pos.x);
+    int y = int(pos.y);
+    int index = x + y * 4;
+    
+    if (index == 0) return 0.0625;
+    if (index == 1) return 0.5625;
+    if (index == 2) return 0.1875;
+    if (index == 3) return 0.6875;
+    if (index == 4) return 0.8125;
+    if (index == 5) return 0.3125;
+    if (index == 6) return 0.9375;
+    if (index == 7) return 0.4375;
+    if (index == 8) return 0.25;
+    if (index == 9) return 0.75;
+    if (index == 10) return 0.125;
+    if (index == 11) return 0.625;
+    if (index == 12) return 1.0;
+    if (index == 13) return 0.5;
+    if (index == 14) return 0.875;
+    if (index == 15) return 0.375;
+    return 0.0;
+  }
 
   void main() {
-    vec3 keyLight = normalize(vec3(0.8, 1.8, 2.2));
-    vec3 fillLight = normalize(vec3(-1.2, 0.4, -0.8));
-    float key = max(dot(vNormal, keyLight), 0.0);
+    // Basic lighting calculation
+    vec3 keyLight = normalize(vec3(0.5, 1.0, 0.8));
+    vec3 fillLight = normalize(vec3(-0.5, 0.0, -0.5));
+    
+    float dotNL = dot(vNormal, keyLight);
+    float key = max(dotNL, 0.0);
     float fill = max(dot(vNormal, fillLight), 0.0) * 0.2;
-    float lit = clamp(0.06 + key * 0.78 + fill, 0.0, 1.0);
+    
+    // Smooth the lighting value a bit before dithering
+    float lit = clamp(0.05 + key * 0.9 + fill, 0.0, 1.0);
 
-    // Diagonal engraving lines
-    float ang1 = 0.52;
-    float coordDiag = vWorldPos.x * sin(ang1) + vWorldPos.y * cos(ang1);
-    float coordHoriz = vWorldPos.y;
+    // Screen-space coordinates for dithering
+    vec2 screenCoord = (vScreenPos.xy / vScreenPos.w * 0.5 + 0.5) * uResolution;
+    
+    // Pixelation factor: Divide screenCoord to make dither dots larger
+    float pixelSize = 1.5; 
+    float limit = bayer4x4(screenCoord / pixelSize);
+    
+    // Obra Dinn "Hard" 1-bit thresholding
+    float ramp = lit > limit ? 1.0 : 0.0;
 
-    // Blend to horizontal on flat surfaces to prevent swirl artifacts
-    float flatness = abs(vNormal.y);
-    float coord1 = mix(coordDiag, coordHoriz, flatness * flatness);
-    float lines1 = sin(coord1 * 380.0) * 0.5 + 0.5;
+    // Rim/Outline effect
+    // We use the view-space normal to create a dark border
+    float rim = 1.0 - abs(vNormal.z);
+    float outline = step(0.7, rim);
+    
+    // Combine lighting and outline
+    float final = ramp;
+    if (outline > 0.5) final = 0.0;
 
-    float litCurve = lit * lit;
-    float th = mix(0.96, 0.04, litCurve);
-    float edge1 = 0.015 + lit * 0.01;
-    float pat1 = smoothstep(th - edge1, th + edge1, lines1);
-
-    // Cross-hatch in deep shadows only
-    float ang2 = -0.45;
-    float coord2Diag = vWorldPos.x * sin(ang2) + vWorldPos.y * cos(ang2);
-    float coord2 = mix(coord2Diag, coordHoriz * 1.1, flatness * flatness);
-    float lines2 = sin(coord2 * 320.0) * 0.5 + 0.5;
-    float pat2 = smoothstep(th - edge1, th + edge1, lines2);
-
-    float crossMask = smoothstep(0.35, 0.08, lit);
-    float pattern = mix(pat1, pat1 * pat2, crossMask * 0.8);
-
-    // On very flat surfaces, fade to solid shading
-    float solidMask = smoothstep(0.85, 0.98, flatness);
-    pattern = mix(pattern, step(0.3, lit), solidMask);
-
-    float rim = 1.0 - abs(dot(vNormal, normalize(vec3(0.0, 0.2, 1.0))));
-    float rimDark = smoothstep(0.72, 0.95, rim) * 0.15;
-
-    vec3 col = mix(uLine, uBase, pattern);
-    col = mix(col, uLine, rimDark);
+    vec3 col = mix(uLine, uBase, final);
     gl_FragColor = vec4(col, 1.0);
   }
 `
@@ -136,14 +156,20 @@ function createCrown(): THREE.BufferGeometry {
 
 export default function EtchedCrown() {
   const ref = useRef<THREE.Mesh>(null)
+  const { size } = useThree()
   const geo = useMemo(() => createCrown(), [])
   const uniforms = useMemo(() => ({
     uBase: { value: new THREE.Color('#f2d80a') },
     uLine: { value: new THREE.Color('#0a0a00') },
+    uResolution: { value: new THREE.Vector2(size.width, size.height) }
   }), [])
 
   useFrame(({ clock }) => {
     const t = clock.getElapsedTime()
+    
+    // Update resolution uniform in case window resizes
+    uniforms.uResolution.value.set(size.width, size.height)
+
     if (ref.current) {
       ref.current.rotation.y = t * 0.2
       ref.current.rotation.x = 0.3 + Math.sin(t * 0.3) * 0.03

@@ -4,7 +4,10 @@ import { OrbitControls } from '@react-three/drei'
 import EtchedCrown from './EtchedCrown'
 import penguinLogo from './assets/Penguin_logo.svg'
 import bookCover from './assets/book_cover.jpg'
-import collectionImage from './assets/collection.jpg'
+import ancientSorceries from './assets/ancient_sorceries.jpg'
+import claimed from './assets/claimed.webp'
+import houseOnTheBorderland from './assets/house_on_the_borderland.jpg'
+import weirdFictionAnthology from './assets/weird_fiction_anthology.jpg'
 import tomaTeLogo from './assets/logo-vertical.svg'
 import './index.css'
 
@@ -173,7 +176,43 @@ function App() {
             <h3 className="collection-label">Explore the collection</h3>
             <p className="collection-sub">The Penguin Weird Fiction Collection</p>
           </div>
-          <img src={collectionImage} alt="Penguin Weird Fiction Collection" className="collection-img" />
+          <div className="collection-grid">
+            <div className="collection-item">
+              <img src={ancientSorceries} alt="Ancient Sorceries" className="collection-item-img" />
+              <div className="collection-item-info">
+                <h4>Ancient Sorceries</h4>
+                <p>Algernon Blackwood</p>
+              </div>
+            </div>
+            <div className="collection-item">
+              <img src={claimed} alt="Claimed!" className="collection-item-img" />
+              <div className="collection-item-info">
+                <h4>Claimed!</h4>
+                <p>Gertrude Barrows Bennett</p>
+              </div>
+            </div>
+            <div className="collection-item">
+              <img src={houseOnTheBorderland} alt="The House on the Borderland" className="collection-item-img" />
+              <div className="collection-item-info">
+                <h4>The House on the Borderland</h4>
+                <p>William Hope Hodgson</p>
+              </div>
+            </div>
+            <div className="collection-item highlight">
+              <img src={bookCover} alt="The King in Yellow" className="collection-item-img" />
+              <div className="collection-item-info">
+                <h4>The King in Yellow</h4>
+                <p>Robert W. Chambers</p>
+              </div>
+            </div>
+            <div className="collection-item">
+              <img src={weirdFictionAnthology} alt="Weird Fiction: An Anthology" className="collection-item-img" />
+              <div className="collection-item-info">
+                <h4>Weird Fiction</h4>
+                <p>An Anthology</p>
+              </div>
+            </div>
+          </div>
           
           <div className="collection-footer">
             <a href="https://www.penguin.co.uk/" target="_blank" rel="noopener noreferrer" className="collection-button">
