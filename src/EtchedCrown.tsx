@@ -154,7 +154,7 @@ function createCrown(): THREE.BufferGeometry {
   return geo
 }
 
-export default function EtchedCrown() {
+export default function EtchedCrown({ loopDuration }: { loopDuration?: number }) {
   const ref = useRef<THREE.Mesh>(null)
   const { size } = useThree()
   const geo = useMemo(() => createCrown(), [])
@@ -171,10 +171,21 @@ export default function EtchedCrown() {
     uniforms.uResolution.value.set(size.width, size.height)
 
     if (ref.current) {
-      ref.current.rotation.y = t * 0.2
-      ref.current.rotation.x = 0.3 + Math.sin(t * 0.3) * 0.03
-      ref.current.rotation.z = Math.sin(t * 0.2) * 0.02 - 0.1
-      ref.current.position.y = Math.sin(t * 0.5) * 0.05
+      if (loopDuration) {
+        const loopT = t % loopDuration
+        const progress = loopT / loopDuration
+        const angle = progress * Math.PI * 2
+        
+        ref.current.rotation.y = angle
+        ref.current.rotation.x = 0.3 + Math.sin(angle) * 0.05
+        ref.current.rotation.z = Math.cos(angle) * 0.03 - 0.1
+        ref.current.position.y = Math.sin(angle * 2) * 0.08
+      } else {
+        ref.current.rotation.y = t * 0.2
+        ref.current.rotation.x = 0.3 + Math.sin(t * 0.3) * 0.03
+        ref.current.rotation.z = Math.sin(t * 0.2) * 0.02 - 0.1
+        ref.current.position.y = Math.sin(t * 0.5) * 0.05
+      }
     }
   })
 

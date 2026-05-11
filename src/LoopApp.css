@@ -1,0 +1,174 @@
+.loop-container {
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #1a1a0a; /* Dark background to frame the square */
+}
+
+.square-viewport {
+  width: 1080px;
+  height: 1080px;
+  max-width: 95vh;
+  max-height: 95vh;
+  aspect-ratio: 1 / 1;
+  background-color: #f2d80a;
+  position: relative;
+  overflow: hidden;
+  box-shadow: 0 0 100px rgba(0, 0, 0, 0.5);
+}
+
+.square-viewport::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image: url("https://www.transparenttextures.com/patterns/natural-paper.png");
+  opacity: 0.2;
+  pointer-events: none;
+  z-index: 5;
+}
+
+.canvas-container-loop {
+  width: 100%;
+  height: 100%;
+}
+
+.loop-ui {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  padding: 4rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  z-index: 10;
+}
+
+.loop-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+}
+
+.loop-header-left {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+}
+
+.loop-logo-penguin {
+  height: 4rem;
+  width: auto;
+}
+
+.loop-collab-x {
+  font-family: 'Cinzel', serif;
+  font-size: 1.8rem;
+  font-weight: 300;
+  color: #1a1a0a;
+  opacity: 0.8;
+  display: flex;
+  align-items: center;
+  margin-top: 0.2rem;
+}
+
+.loop-logo-tomate {
+  height: 4rem;
+  width: auto;
+  filter: brightness(0);
+}
+
+.loop-header-right {
+  text-align: right;
+}
+
+.loop-date-label {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.6rem;
+  letter-spacing: 0.3em;
+  opacity: 0.5;
+  margin-bottom: 0.3rem;
+}
+
+.loop-date {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 1.2rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  color: #1a1a0a;
+}
+
+.loop-footer-center {
+  width: 100%;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.loop-series {
+  font-family: 'Cinzel', serif;
+  font-size: 0.7rem;
+  letter-spacing: 0.4em;
+  opacity: 0.6;
+  text-transform: uppercase;
+}
+
+.loop-title {
+  font-family: 'Metamorphous', serif;
+  font-size: 4.5rem;
+  color: #1a1a0a;
+  text-transform: lowercase;
+  letter-spacing: -0.02em;
+  line-height: 1;
+}
+
+.loop-author {
+  font-family: 'Spectral', serif;
+  font-size: 1.2rem;
+  font-style: italic;
+  opacity: 0.8;
+  margin-top: 0.5rem;
+}
+
+@media (max-width: 600px) {
+  .square-viewport {
+    width: 100vw;
+    height: 100vw;
+    max-width: 100vw;
+    max-height: 100vw;
+  }
+  
+  .loop-ui {
+    padding: 1.5rem;
+  }
+  
+  .loop-header-right {
+    top: 1.5rem;
+    right: 1.5rem;
+  }
+  
+  .loop-logo-penguin, .loop-logo-tomate {
+    height: 2.2rem;
+  }
+  
+  .loop-collab-x {
+    font-size: 1.2rem;
+  }
+  
+  .loop-title {
+    font-size: 1.8rem;
+  }
+  
+  .loop-date {
+    font-size: 0.7rem;
+  }
+}
