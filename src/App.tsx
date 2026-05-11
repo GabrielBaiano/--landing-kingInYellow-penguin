@@ -14,6 +14,9 @@ import './index.css'
 function App() {
   const [isMobile, setIsMobile] = useState(window.innerWidth < 768)
   const [scrollProgress, setScrollProgress] = useState(0)
+  const [showBlackHole, setShowBlackHole] = useState(false)
+  const [logoState, setLogoState] = useState(0)
+  const [zoomLogo, setZoomLogo] = useState(false)
 
   useEffect(() => {
     const handleScroll = () => {
@@ -27,8 +30,10 @@ function App() {
     window.addEventListener('scroll', handleScroll)
     window.addEventListener('resize', handleResize)
 
+    let isActive = true;
+
     // Auto-scroll sequence for recording
-    const runAutoScroll = async () => {
+    const runAutoScrollSequence = async () => {
       const smoothScrollTo = (targetY, duration, easing = t => t) => {
         return new Promise(resolve => {
           const startY = window.scrollY;
@@ -36,6 +41,7 @@ function App() {
           const startTime = performance.now();
 
           const step = (currentTime) => {
+            if (!isActive) return resolve(undefined);
             const elapsed = currentTime - startTime;
             const progress = Math.min(elapsed / duration, 1);
             const easeProgress = easing(progress);
@@ -44,7 +50,7 @@ function App() {
             if (progress < 1) {
               requestAnimationFrame(step);
             } else {
-              resolve();
+              resolve(undefined);
             }
           };
           requestAnimationFrame(step);
@@ -54,45 +60,73 @@ function App() {
       const easeInOutQuad = t => t < 0.5 ? 2 * t * t : -1 + (4 - 2 * t) * t;
       const easeInOutSine = t => -(Math.cos(Math.PI * t) - 1) / 2;
 
-      // 1. Show home, wait 2 seconds
-      await new Promise(r => setTimeout(r, 2000));
+      while (isActive) {
+        // Reset states for loop
+        setShowBlackHole(false);
+        setLogoState(0);
+        setZoomLogo(false);
+        window.scrollTo(0, 0);
 
-      // 2. Scroll meio rápido to "the king in yellow"
-      const editorialSec = document.querySelector('.editorial-section');
-      if (editorialSec) {
-        // Scroll slightly past the top so it's well framed
-        const target = editorialSec.getBoundingClientRect().top + window.scrollY - window.innerHeight * 0.1;
-        await smoothScrollTo(target, 1500, easeInOutQuad);
+        // 1. Show home, wait 2 seconds
+        await new Promise(r => setTimeout(r, 2000));
+        if (!isActive) break;
+
+        // 2. Scroll meio rápido to "the king in yellow"
+        const editorialSec = document.querySelector('.editorial-section');
+        if (editorialSec) {
+          const target = editorialSec.getBoundingClientRect().top + window.scrollY - window.innerHeight * 0.1;
+          await smoothScrollTo(target, 1500, easeInOutQuad);
+          await new Promise(r => setTimeout(r, 1000));
+        }
+        if (!isActive) break;
+
+        // 3. Scroll um pouco devagar e mais suave (through the text)
+        const detailsSec = document.querySelector('.editorial-details');
+        if (detailsSec) {
+          const target = detailsSec.getBoundingClientRect().bottom + window.scrollY - window.innerHeight * 0.5;
+          await smoothScrollTo(target, 7000, easeInOutSine);
+        }
+        if (!isActive) break;
+
+        // 4. Scroll suave mais rápido to products
+        const purchaseSec = document.querySelector('.purchase-section');
+        if (purchaseSec) {
+          const target = purchaseSec.getBoundingClientRect().top + window.scrollY - 50;
+          await smoothScrollTo(target, 1800, easeInOutQuad);
+          await new Promise(r => setTimeout(r, 800));
+        }
+        if (!isActive) break;
+
+        // 5. Scroll to the end of the footer
+        const targetEnd = document.documentElement.scrollHeight - window.innerHeight;
+        await smoothScrollTo(targetEnd, 2500, easeInOutQuad);
+        if (!isActive) break;
         
-        // Wait 1 second before the slow scroll
-        await new Promise(r => setTimeout(r, 1000));
-      }
+        // 6. Trigger black hole transition
+        setShowBlackHole(true);
+        await new Promise(r => setTimeout(r, 1500)); // wait for black screen
+        if (!isActive) break;
 
-      // 3. Scroll um pouco devagar e mais suave (through the text)
-      const detailsSec = document.querySelector('.editorial-details');
-      if (detailsSec) {
-        // Scroll to the end of the text section
-        const target = detailsSec.getBoundingClientRect().bottom + window.scrollY - window.innerHeight * 0.5;
-        await smoothScrollTo(target, 7000, easeInOutSine);
-      }
+        // 7. Scroll back to top instantly under the black screen
+        window.scrollTo(0, 0);
+        
+        // 8. Draw Logo cutout
+        setLogoState(1);
+        await new Promise(r => setTimeout(r, 2500)); // wait for drawing
+        if (!isActive) break;
 
-      // 4. Scroll suave mais rápido to products
-      const purchaseSec = document.querySelector('.purchase-section');
-      if (purchaseSec) {
-        const target = purchaseSec.getBoundingClientRect().top + window.scrollY - 50;
-        await smoothScrollTo(target, 1800, easeInOutQuad);
-        await new Promise(r => setTimeout(r, 800)); // small pause on the product
+        // 9. Zoom logo to reveal page
+        setZoomLogo(true);
+        await new Promise(r => setTimeout(r, 1500)); // wait for zoom
+        if (!isActive) break;
       }
-
-      // 5. Scroll to the end of the footer
-      const targetEnd = document.documentElement.scrollHeight - window.innerHeight;
-      await smoothScrollTo(targetEnd, 2500, easeInOutQuad);
     };
 
     // Wait a bit for the page to render fully, then start
-    setTimeout(runAutoScroll, 500);
+    setTimeout(runAutoScrollSequence, 500);
 
     return () => {
+      isActive = false;
       window.removeEventListener('scroll', handleScroll)
       window.removeEventListener('resize', handleResize)
     }
@@ -317,6 +351,57 @@ function App() {
             <img src={tomaTeLogo} alt="Toma-te Logo" className="footer-brand-logo" />
           </div>
         </footer>
+      </div>
+
+      {/* Cutout Loop Overlay */}
+      <div style={{ position: 'fixed', top: 0, left: 0, width: '100vw', height: '100vh', zIndex: 9999, pointerEvents: 'none' }}>
+        <svg width="100%" height="100%">
+          <defs>
+            <mask id="cutout-mask">
+              {/* This circle expands from the bottom, making the mask white (which makes the black rect opaque) */}
+              <circle 
+                cx="50vw" 
+                cy="100vh" 
+                r={showBlackHole ? "150vmax" : "0"} 
+                fill="white" 
+                style={{ transition: showBlackHole ? 'r 1.5s cubic-bezier(0.65, 0, 0.35, 1)' : 'none' }} 
+              />
+              
+              {/* Logo drawn in black inside the white mask, creating transparent holes */}
+              <g 
+                fill="none" 
+                stroke="black" 
+                strokeWidth="25" 
+                strokeLinecap="butt"
+                style={{
+                  transform: `translate(calc(50vw - 50px), calc(50vh - 95px)) scale(${zoomLogo ? 150 : 1}) rotate(${logoState >= 1 ? 360 : 0}deg)`,
+                  transition: zoomLogo ? 'transform 1.5s cubic-bezier(0.5, 0, 0.2, 1)' : (logoState >= 1 ? 'transform 2.35s cubic-bezier(0.4, 0, 0.2, 1)' : 'none'),
+                  transformOrigin: '50px 95px'
+                }}
+              >
+                <circle 
+                  cx="50" cy="50" r="40" 
+                  strokeDasharray="260" 
+                  strokeDashoffset={logoState >= 1 ? 0 : 260} 
+                  style={{ transition: logoState >= 1 ? 'stroke-dashoffset 1.15s ease 0.15s' : 'none' }} 
+                />
+                <path 
+                  d="M 50 10 L 100 10" 
+                  strokeDasharray="60" 
+                  strokeDashoffset={logoState >= 1 ? 0 : 60} 
+                  style={{ transition: logoState >= 1 ? 'stroke-dashoffset 0.6s ease 0.9s' : 'none' }} 
+                />
+                <path 
+                  d="M 15.36 120 A 40 40 0 0 1 90 140 A 40 40 0 0 1 15.36 160" 
+                  strokeDasharray="260" 
+                  strokeDashoffset={logoState >= 1 ? 0 : 260} 
+                  style={{ transition: logoState >= 1 ? 'stroke-dashoffset 1.15s ease 1.2s' : 'none' }} 
+                />
+              </g>
+            </mask>
+          </defs>
+          <rect width="100%" height="100%" fill="#050505" mask="url(#cutout-mask)" />
+        </svg>
       </div>
     </div>
   )
