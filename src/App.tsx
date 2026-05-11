@@ -26,6 +26,72 @@ function App() {
     }
     window.addEventListener('scroll', handleScroll)
     window.addEventListener('resize', handleResize)
+
+    // Auto-scroll sequence for recording
+    const runAutoScroll = async () => {
+      const smoothScrollTo = (targetY, duration, easing = t => t) => {
+        return new Promise(resolve => {
+          const startY = window.scrollY;
+          const distance = targetY - startY;
+          const startTime = performance.now();
+
+          const step = (currentTime) => {
+            const elapsed = currentTime - startTime;
+            const progress = Math.min(elapsed / duration, 1);
+            const easeProgress = easing(progress);
+            window.scrollTo(0, startY + distance * easeProgress);
+
+            if (progress < 1) {
+              requestAnimationFrame(step);
+            } else {
+              resolve();
+            }
+          };
+          requestAnimationFrame(step);
+        });
+      };
+
+      const easeInOutQuad = t => t < 0.5 ? 2 * t * t : -1 + (4 - 2 * t) * t;
+      const easeInOutSine = t => -(Math.cos(Math.PI * t) - 1) / 2;
+
+      // 1. Show home, wait 2 seconds
+      await new Promise(r => setTimeout(r, 2000));
+
+      // 2. Scroll meio rápido to "the king in yellow"
+      const editorialSec = document.querySelector('.editorial-section');
+      if (editorialSec) {
+        // Scroll slightly past the top so it's well framed
+        const target = editorialSec.getBoundingClientRect().top + window.scrollY - window.innerHeight * 0.1;
+        await smoothScrollTo(target, 1500, easeInOutQuad);
+        
+        // Wait 1 second before the slow scroll
+        await new Promise(r => setTimeout(r, 1000));
+      }
+
+      // 3. Scroll um pouco devagar e mais suave (through the text)
+      const detailsSec = document.querySelector('.editorial-details');
+      if (detailsSec) {
+        // Scroll to the end of the text section
+        const target = detailsSec.getBoundingClientRect().bottom + window.scrollY - window.innerHeight * 0.5;
+        await smoothScrollTo(target, 7000, easeInOutSine);
+      }
+
+      // 4. Scroll suave mais rápido to products
+      const purchaseSec = document.querySelector('.purchase-section');
+      if (purchaseSec) {
+        const target = purchaseSec.getBoundingClientRect().top + window.scrollY - 50;
+        await smoothScrollTo(target, 1800, easeInOutQuad);
+        await new Promise(r => setTimeout(r, 800)); // small pause on the product
+      }
+
+      // 5. Scroll to the end of the footer
+      const targetEnd = document.documentElement.scrollHeight - window.innerHeight;
+      await smoothScrollTo(targetEnd, 2500, easeInOutQuad);
+    };
+
+    // Wait a bit for the page to render fully, then start
+    setTimeout(runAutoScroll, 500);
+
     return () => {
       window.removeEventListener('scroll', handleScroll)
       window.removeEventListener('resize', handleResize)
