@@ -155,6 +155,24 @@ body {
   .ui-top-center {
     display: none;
   }
+  
+  .ui-header {
+    top: 1.5rem;
+    left: 1.5rem;
+    right: 1.5rem;
+  }
+  
+  .vertical-divider {
+    height: 2.5rem;
+  }
+  
+  .logo-icon-svg {
+    width: 2.5rem;
+  }
+  
+  .ui-label-brand {
+    font-size: 0.9rem;
+  }
 }
 
 /* Bottom-left indicator */
@@ -596,7 +614,66 @@ body {
   image-rendering: -webkit-optimize-contrast; /* Sharpen vectors in some browsers */
   display: block;
 }
+/* Mobile Specific Overrides */
+@media (max-width: 600px) {
+  .editorial-section {
+    padding: 15vh 1.5rem 0 1.5rem;
+  }
 
+  .editorial-title {
+    font-size: clamp(3rem, 15vw, 4.5rem);
+    line-height: 1.1;
+  }
 
+  .indent-title {
+    padding-left: 2rem;
+  }
 
+  .editorial-title-wrapper {
+    margin-bottom: 4rem;
+  }
 
+  .quote-container {
+    gap: 1rem;
+  }
+
+  .quote-parenthesis {
+    font-size: clamp(5rem, 25vw, 8rem);
+  }
+
+  .editorial-quote {
+    font-size: 1.1rem;
+    line-height: 1.4;
+  }
+
+  .editorial-details {
+    margin: 4rem auto 6rem auto;
+    font-size: 1.1rem;
+    padding: 0 1.5rem;
+  }
+
+  .details-lead {
+    font-size: 1.3rem;
+  }
+
+  .details-sub {
+    font-size: 1.5rem;
+    margin: 3rem 0 1.5rem 0;
+  }
+
+  .purchase-section {
+    margin: 6rem auto;
+  }
+
+  .purchase-title {
+    font-size: 2.2rem;
+  }
+
+  .collection-section {
+    margin: 10rem auto 4rem auto;
+  }
+
+  .footer-question {
+    font-size: 1.3rem;
+  }
+}

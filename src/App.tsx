@@ -12,6 +12,7 @@ import tomaTeLogo from './assets/logo-vertical.svg'
 import './index.css'
 
 function App() {
+  const [isMobile, setIsMobile] = useState(window.innerWidth < 768)
   const [scrollProgress, setScrollProgress] = useState(0)
 
   useEffect(() => {
@@ -20,8 +21,15 @@ function App() {
       const progress = window.scrollY / totalHeight
       setScrollProgress(progress)
     }
+    const handleResize = () => {
+      setIsMobile(window.innerWidth < 768)
+    }
     window.addEventListener('scroll', handleScroll)
-    return () => window.removeEventListener('scroll', handleScroll)
+    window.addEventListener('resize', handleResize)
+    return () => {
+      window.removeEventListener('scroll', handleScroll)
+      window.removeEventListener('resize', handleResize)
+    }
   }, [])
 
   return (
@@ -55,7 +63,13 @@ function App() {
 
       {/* UI Overlay - Fixed */}
       <div className="ui-overlay">
-        <header className="ui-header">
+        <header 
+          className="ui-header"
+          style={{ 
+            opacity: isMobile ? Math.max(0, 1 - scrollProgress * 10) : 1,
+            pointerEvents: isMobile && scrollProgress > 0.1 ? 'none' : 'auto'
+          }}
+        >
           <div className="header-left">
             <div className="ui-logo">
               <img src={penguinLogo} alt="Penguin Logo" className="logo-icon-svg" />

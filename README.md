@@ -1,73 +1,28 @@
-# React + TypeScript + Vite
+# The King in Yellow | Penguin Weird Fiction Portfolio
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+![Project Demonstration](./Animação.webp)
 
-Currently, two official plugins are available:
+## About the Project
+This repository contains a reproduction and refinement of a design project originally developed in partnership with **Livraria da Vila** (São Paulo) and the **Penguin Books** stand for a literary event in 2024.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+The core objective was to create an interface that merges the **1980s digital aesthetic** with contemporary **editorial minimalism**. The visual proposal explores the tension between classic cosmic horror literature and retro-technological vibes.
 
-## React Compiler
+### A Note on its Origin
+This project has a unique backstory. It all started with a chance conversation at a book fair about the game **Signalis**, which is famously intertwined with the mythos of *The King in Yellow*. Some time later, the person from that conversation reached out, eventually becoming a client, leading to this amazing collaboration.
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+### Inspiration
+The primary visual reference for this project was the game **"Return of the Obra Dinn"** by Lucas Pope.
 
-## Expanding the ESLint configuration
+We used **Ordered Dithering (Bayer Matrix)** techniques and 1-bit thresholding via GLSL Shaders to render the Crown of Cassilda in real-time. This simulates the look of early phosphorus monitors and traditional etched metal art, but adapted to a vibrant palette inspired by classic Penguin paperback editions.
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+## Tech Stack
+- **React 19** + **TypeScript**
+- **Vite** (Build tool)
+- **Three.js** / **React Three Fiber** (3D Rendering)
+- **GLSL** (Custom Shaders for the Obra Dinn effect)
+- **Vanilla CSS** (Responsive layout and editorial typography)
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
-
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
-
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
-
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
-
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+## Getting Started
+1. Clone the repository
+2. Install dependencies: `npm install`
+3. Run the development server: `npm run dev`
