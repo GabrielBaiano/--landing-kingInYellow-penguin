@@ -190,7 +190,7 @@ export default function EtchedCrown({ loopDuration }: { loopDuration?: number })
   })
 
   return (
-    <mesh ref={ref} geometry={geo} scale={0.6}>
+    <mesh ref={ref} geometry={geo} scale={0.45}>
       <shaderMaterial
         vertexShader={vertShader}
         fragmentShader={fragShader}

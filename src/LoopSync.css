@@ -1,0 +1,16 @@
+.recording-sync {
+  position: absolute;
+  top: -2rem;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.7rem;
+  color: #1a1a0a;
+  opacity: 0.5;
+  letter-spacing: 0.2em;
+  animation: syncFlash 0.5s ease-out forwards;
+}
+
+@keyframes syncFlash {
+  0% { opacity: 0; transform: translateY(5px); }
+  20% { opacity: 0.8; transform: translateY(0); }
+  100% { opacity: 0; transform: translateY(-5px); }
+}
